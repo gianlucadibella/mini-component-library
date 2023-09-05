@@ -9,13 +9,13 @@ import VisuallyHidden from "../VisuallyHidden";
 const IconInput = ({ label, icon, width = 250, size, ...delegated }) => {
   const STYLES = {
     small: {
-      fontSize: 14,
+      fontSize: (14/16),
       iconSize: 16,
       borderThickness: 1,
       height: 24
     },
     large: {
-      fontSize: 18,
+      fontSize: (18/16),
       iconSize: 24,
       borderThickness: 2,
       height: 36
@@ -36,7 +36,7 @@ const IconInput = ({ label, icon, width = 250, size, ...delegated }) => {
       <TextInput {...delegated} style={{
          "--width": width + "px",
          "--borderThickness": STYLES[size].borderThickness + `px solid ${COLORS.black}`,
-         "--fontSize": STYLES[size].fontSize + "px",
+         "--fontSize": STYLES[size].fontSize + "rem",
          "--height": STYLES[size].height + "px"
       }}/>
     </Wrapper>
