@@ -6,77 +6,77 @@ import { COLORS } from "../../constants";
 import Icon from "../Icon";
 import VisuallyHidden from "../VisuallyHidden";
 
-const IconInput = ({ label, icon, width = 250, size, placeholder }) => {
+const IconInput = ({ label, icon, width = 250, size, ...delegated }) => {
   const STYLES = {
     small: {
-      "--font-size": 14 / 16 + "rem",
-      "--border-bottom": 1 + "px",
-      "--icon-size": 16 + "px",
-      "--padding": 8 + "px",
+      fontSize: 14,
+      iconSize: 16,
+      borderThickness: 1,
+      height: 24
     },
     large: {
-      "--font-size": 18 / 16 + "rem",
-      "--border-bottom": 2 + "px",
-      "--icon-size": 24 + "px",
-      "--padding": 12 + "px",
-    },
+      fontSize: 18,
+      iconSize: 24,
+      borderThickness: 2,
+      height: 36
+    }
   };
 
   return (
-    <Wrapper
-      style={{
-        "--border-bottom": STYLES[size]["--border-bottom"],
-        "--font-size": STYLES[size]["--font-size"],
-      }}
-    >
+    <Wrapper>
       <VisuallyHidden>{label}</VisuallyHidden>
-      <Input
-        placeholder={placeholder}
-        style={{
-          "--width": width + "px",
-        }}
-      />
       <IconWrapper
         style={{
-          "--padding": STYLES[size]["--padding"],
-        }}
+          "--size": STYLES[size].iconSize + "px"
+         
+         }}
       >
-        <Icon id={icon} strokeWidth={2} size={STYLES[size]["--icon-size"]} />
+        <Icon id={icon} size={STYLES[size].iconSize} />
       </IconWrapper>
-     
+      <TextInput {...delegated} style={{
+         "--width": width + "px",
+         "--borderThickness": STYLES[size].borderThickness + `px solid ${COLORS.black}`,
+         "--fontSize": STYLES[size].fontSize + "px",
+         "--height": STYLES[size].height + "px"
+      }}/>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div`
-  position: absolute;
-  width: max-content;
-  display: flex;
-  flex-direction: row-reverse;
-  border-bottom: var(--border-bottom) solid ${COLORS.black};
-  font-size: var(--font-size);
+const Wrapper = styled.label`
+  display: block;
+  position: relative;
+  height: var(--height);
+  color: ${COLORS.gray700};
 
-  &:focus-within {
-    outline: 2px dotted #212121;
-    outline: 5px auto -webkit-focus-ring-color;
-    outline-offset: 8px;
+  &:hover {
+    color: ${COLORS.black}
   }
 `;
 
-const Input = styled.input`
-  border: none;
-  outline: none;
+const TextInput = styled.input`
   width: var(--width);
-  font-weight: 700;
+  height: ${24 / 16}rem;
+  border: none;
+  border-bottom: var(--borderThickness);
+  padding-left: var(--height);
   color: ${COLORS.gray700};
-  ::placeholder {
+  font-weight: 700;
+  outline-offset: 2px; 
+  font-size: var(--fontSize);
+
+  &::placeholder {
     color: ${COLORS.gray500};
     font-weight: 400;
   }
 `;
 
 const IconWrapper = styled.div`
-  padding-right: var(--padding);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  height: var(--size);
 `;
 
 export default IconInput;
